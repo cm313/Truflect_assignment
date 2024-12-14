@@ -14,20 +14,22 @@ const Filter = () => {
         dispatch(addItems(data?.products));
   }
 
-  // const handleSort = (event)=>{
-  //   if(event.target.value === "A-Z")
-  //   productsList.sort((a, b) => a.product_name_en.localeCompare(b.product_name_en));
-  //    else
-  //    productsList.sort((a, b) => a.product_name_en.localeCompare(b.product_name_en));
-
-  //    dispatch(addItems(productsList));
-  // }
+  const handleSort = (event)=>{
+    if(event.target.value === "A-Z"){
+   const sortedList = [...productsList].sort((a, b) => (a.product_name_en || "").localeCompare(b.product_name_en || ""));
+   dispatch(addItems(sortedList));
+    }
+     else if(event.target.value == "Z-A"){
+    const reverseSortedList = [...productsList].sort((a, b) =>(b.product_name_en || "").localeCompare(a.product_name_en || ""));
+     dispatch(addItems(reverseSortedList));
+     }
+  }
 
 
   return (
-    <div className="m-4">
-  <label for="cars">Choose Category:</label>
-  <select onChange={handleCategory} className="border border-black rounded-xl ml-2 w-1/4 p-2" name="category" id="CategoryfoodProducts">
+    <div className="m-4 md:flex">
+  <div className="mr-2 mb-2 md:mb-0">
+  <select onChange={handleCategory} className="border border-black rounded-full ml-2 w-52 p-2" name="category" id="CategoryfoodProducts">
      <option value="" disabled selected>select by category</option>
     <option value="Sweet snacks">Sweet snacks</option>
     <option value="Plant-based foods and beverages">Plant-based foods and beverages</option>
@@ -39,14 +41,23 @@ const Filter = () => {
     <option value="Fermented milk products">Fermented milk products</option>
     <option value="Fruits and vegetables based foods">Fruits and vegetables based foods</option>
     <option value="Biscuits and cakes">Biscuits and cakes</option>
+    <option value="French cheeses">French cheeses</option>
+    <option value="Ice creams">Ice creams</option>
+    <option value="Bodybuilding supplements">Bodybuilding supplements</option>
+    <option value="Sweet pastries and pies">Sweet pastries and pies</option>
+    <option value="Coffees">Coffees</option>
+    <option value="Pizzas">Pizzas</option>
+    <option value="Sandwiches">Sandwiches</option>
+    <option value="Potato crisps">Potato crisps</option>
   </select>
-  <label className="ml-2" for="cars">Sort by:</label>
-  <select className="border border-black rounded-xl ml-2 w-1/4 p-2" name="sort" id="sortedFoodProducts">
+  </div>
+  <div>
+  <select onChange={handleSort} className="border border-black rounded-full ml-2 w-52 p-2" name="sort" id="sortedFoodProducts">
     <option value="" disabled selected>sort</option>
     <option value="A-Z">A-Z</option>
     <option value="Z-A">Z-A</option>
   </select>
-  
+  </div>
     </div>
   )
 }

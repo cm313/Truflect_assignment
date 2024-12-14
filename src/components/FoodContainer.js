@@ -3,6 +3,7 @@ import {useSelector} from "react-redux"
 import ShimmerUi from '../utils/ShimmerUi';
 import useProductsData from '../utils/useProductsData';
 import FoodCard from './FoodCard';
+import {Link} from "react-router-dom";
 
 const FoodContainer = () => {
    
@@ -13,8 +14,7 @@ const FoodContainer = () => {
       <div className="flex flex-wrap border rounded-md shadow-lg m-2 left-0 right-0">
         {
           productsList.map((product)=>{
-            const{id,product_name_en,image_front_url, ingredients, categories}=product;
-           return <FoodCard key={id} name = {product_name_en} imageUrl={image_front_url} ingredients={ingredients} categories={categories} />
+           return <Link to={`/productdetails/${product?.id}`} key={product?.id} ><FoodCard product={product} /></Link>
           })
         }
       </div>
