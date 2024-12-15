@@ -6,6 +6,9 @@ const FoodDetailsCard = ({product}) => {
     ingredients,
     categories
    } = product;
+
+   const{energy,fiber,proteins,saturated_fat,sodium,sugars}=product?.nutriscore_data
+
   return (
     product_name_en && image_front_url && ingredients &&
     <div className="m-4 md:flex border border-black shadow-lg rounded-xl">
@@ -17,14 +20,27 @@ const FoodDetailsCard = ({product}) => {
       <div className="flex font-serif flex-wrap">
        <span className=" font-semibold text-violet-600">Ingredients:</span>
        {
-        ingredients.map((ingredient)=>
+        ingredients.map((ingredient)=>(
           <div  className="" key={ingredient?.id}>{ingredient?.text},</div>
         )
+        )
        }
+       </div>   
+       <div className="font-serif my-2"><span className="font-semibold text-violet-600">Category:</span>{categories}
        </div>
-       <div className="font-serif my-2"><span className="font-semibold text-violet-600">Category:</span>{categories}</div>
+       {
+        ingredients[0].vegan &&
+        <div className= " bg-green-400 rounded-lg text-white font-serif w-14 px-2 py-1">Vegan</div>
+        }
+
+        <div className="font-serif my-2">
+          <span className="font-semibold text-violet-600">Nutrtition Values:</span><span className="text-wrap">
+            energy({energy}),fiber({fiber}),proteins({proteins}),saturated_fat({saturated_fat}),sodium({sodium}),sugars({sugars})
+          </span>
+        </div>
+
       </div>
-     
+
     </div>
   )
 }

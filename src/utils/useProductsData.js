@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { addItems, addTotalItems } from '../redux/productsSlice';
+import  { useEffect } from 'react'
+import { addItems, addTotalItems,toggle } from '../redux/productsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 const useProductsData = () => {
@@ -15,6 +15,7 @@ const fetchProductsData = async()=>{
   const jsonData = await data.json();
   dispatch(addItems(jsonData?.products));
   dispatch(addTotalItems(jsonData?.products));
+  dispatch(toggle());
 }
 }
 

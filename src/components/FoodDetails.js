@@ -1,7 +1,6 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
 import {useSelector} from "react-redux";
-import FoodCard from './FoodCard';
 import FoodDetailsCard from './FoodDetailsCard';
 
 const FoodDetails = () => {

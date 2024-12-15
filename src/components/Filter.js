@@ -1,20 +1,23 @@
-import React from 'react'
+import React,{useState} from 'react'
 import {useDispatch, useSelector} from "react-redux";
-import {addItems} from "../redux/productsSlice";
+import {addItems, toggle} from "../redux/productsSlice";
 
 const Filter = () => {
-
+  const[select, setSelect] = useState("");
+  const[sortSelect, setSortSelect] = useState("");
   const dispatch = useDispatch();
 
   const productsList = useSelector((appStore)=>appStore?.products?.items)
   
-  const handleCategory= async (event)=>{
+  const handleCategorySort= async (event)=>{
+       dispatch(toggle());
        const productsList = await fetch(`https://world.openfoodfacts.org/category/{${event.target.value}}.json`)
         const data = await productsList.json();
         dispatch(addItems(data?.products));
+        dispatch(toggle());
   }
 
-  const handleSort = (event)=>{
+  const HandleAlphabeticSort = (event)=>{
     if(event.target.value === "A-Z"){
    const sortedList = [...productsList].sort((a, b) => (a.product_name_en || "").localeCompare(b.product_name_en || ""));
    dispatch(addItems(sortedList));
@@ -25,12 +28,17 @@ const Filter = () => {
      }
   }
 
+  const handleNutritionSort = ()=>{
+    const sortedList = [...productsList].sort((a, b) => (a.nutriscore_2023_tags[0] || "").localeCompare(b.nutriscore_2023_tags[0] || ""));
+   dispatch(addItems(sortedList));
+  }
+
 
   return (
     <div className="m-4 md:flex">
   <div className="mr-2 mb-2 md:mb-0">
-  <select onChange={handleCategory} className="border border-black rounded-full ml-2 w-52 p-2" name="category" id="CategoryfoodProducts">
-     <option value="" disabled selected>select by category</option>
+  <select onChange={handleCategorySort} value={select} className="border border-black rounded-full ml-2 w-52 p-2" name="category" id="CategoryfoodProducts">
+     <option value="" disabled>select by category</option>
     <option value="Sweet snacks">Sweet snacks</option>
     <option value="Plant-based foods and beverages">Plant-based foods and beverages</option>
     <option value="Beverages">Beverages</option>
@@ -52,11 +60,14 @@ const Filter = () => {
   </select>
   </div>
   <div>
-  <select onChange={handleSort} className="border border-black rounded-full ml-2 w-52 p-2" name="sort" id="sortedFoodProducts">
-    <option value="" disabled selected>sort</option>
+  <select onChange={HandleAlphabeticSort} value={sortSelect} className="border mb-2 border-black rounded-full ml-2 w-52 p-2" name="sort" id="sortedFoodProducts">
+    <option value="" disabled>sort(A-Z/Z-A)</option>
     <option value="A-Z">A-Z</option>
     <option value="Z-A">Z-A</option>
   </select>
+  </div>
+  <div>
+  <button onClick={handleNutritionSort}className="border border-black rounded-full ml-2 w-52 p-2"> Sort by Nutrition Grade</button>
   </div>
     </div>
   )

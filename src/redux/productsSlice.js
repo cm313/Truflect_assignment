@@ -5,9 +5,7 @@ const productsSlice = createSlice({
   initialState: {
     items:null,
     totalItems: null,
-    categoryItems: null,
-    nameItems: null,
-    barCodeItems: null
+    dataFetched: false,
   },
   reducers:{
       addItems: (state, action)=>{
@@ -15,9 +13,12 @@ const productsSlice = createSlice({
       },
       addTotalItems:(state, action)=>{
         state.totalItems = action.payload;
-      },  
+      },
+      toggle:(state)=>{
+        state.dataFetched = !state.dataFetched;
+      }
   }
 });
 
 export default productsSlice.reducer;
-export const{addItems,addTotalItems,addNameItems,addCategoryItems,addBarcodeItems} = productsSlice.actions;                     
+export const{addItems,addTotalItems,toggle} = productsSlice.actions;                     
