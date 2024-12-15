@@ -9,4 +9,4 @@
 ### Used TailwindCSS for styling the web application
 ### The application is responsive to devices 
 ## It took 3 days to complete the assignment
-#### kindly inform me if need for improvements or changes, I will give my best to satisfy the requirements
+#### kindly inform me if needed any improvements or changes, I will give my best to satisfy the requirements
